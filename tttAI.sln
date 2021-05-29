@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tttAI", "tttAI.vcxproj", "{FF6D54C7-042D-4EAD-BFE7-0EF571C1ACEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF6D54C7-042D-4EAD-BFE7-0EF571C1ACEB}.Debug|x64.ActiveCfg = Debug|x64
+		{FF6D54C7-042D-4EAD-BFE7-0EF571C1ACEB}.Debug|x64.Build.0 = Debug|x64
+		{FF6D54C7-042D-4EAD-BFE7-0EF571C1ACEB}.Debug|x86.ActiveCfg = Debug|Win32
+		{FF6D54C7-042D-4EAD-BFE7-0EF571C1ACEB}.Debug|x86.Build.0 = Debug|Win32
+		{FF6D54C7-042D-4EAD-BFE7-0EF571C1ACEB}.Release|x64.ActiveCfg = Release|x64
+		{FF6D54C7-042D-4EAD-BFE7-0EF571C1ACEB}.Release|x64.Build.0 = Release|x64
+		{FF6D54C7-042D-4EAD-BFE7-0EF571C1ACEB}.Release|x86.ActiveCfg = Release|Win32
+		{FF6D54C7-042D-4EAD-BFE7-0EF571C1ACEB}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7BCA83BB-EB44-4925-A098-929230E43185}
+	EndGlobalSection
+EndGlobal
