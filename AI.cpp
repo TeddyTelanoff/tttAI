@@ -1,5 +1,8 @@
 #include "Game.h"
 
+#include <cassert>
+#include <algorithm>
+
 #define RETIF(val, cond) { int value = val; if (cond) return value; }
 
 namespace TicTacToe
@@ -57,32 +60,112 @@ namespace TicTacToe
 
 		// Radomly choose next move...
 		// but make sure not to make infinite loop...
-		if (memchr(board, (char)State::Empty, 9))
+		if (!memchr(board, (char)State::Empty, 9))
 			return;
+
+		srand(time(nullptr));
 		do
 			nextMove = rand() % 9;
 		while (!Move(state, nextMove));
 	}
 
-	void Game::PlayAI()
+	void Game::GudAIMove(State state)
+	{
+		int bestMove = -1;
+		int bestMoveVal = INT_MIN;
+
+		State enemyState = !state;
+
+		// Loop through all possible moves
+		for (int i = 0; i < 9; i++)
+		{
+			if (board[i] != State::Empty)
+				continue;
+
+			board[i] = enemyState;
+			int move = MiniMax(board, state, false);
+			board[i] = State::Empty;
+			if (move > bestMoveVal)
+			{
+				bestMoveVal = move;
+				bestMove = i;
+			}
+		}
+
+		bool possible = Move(state, bestMove);
+		assert(possible && "Something went wrong");
+	}
+
+	[[recursive]]
+	int Game::MiniMax(Board board, State state, bool maximizing)
+	{
+		State winner = Winner(board);
+		State enemyState = !state;
+		if (winner == state)
+			return 1;
+		if (winner == enemyState)
+			return -1;
+		if (winner == State::Tie)
+			return 0;
+
+		if (maximizing)
+		{
+			int bestMove = 10;
+			for (int i = 0; i < 9; i++)
+			{
+				if (board[i] != State::Empty)
+					continue;
+
+				board[i] = state;
+				int move = MiniMax(board, state, false);
+				board[i] = State::Empty;
+				bestMove = max(move, bestMove);
+			}
+
+			return bestMove;
+		}
+
+		int bestMove = -10;
+		for (int i = 0; i < 9; i++)
+		{
+			if (board[i] != State::Empty)
+				continue;
+
+			board[i] = enemyState;
+			int move = MiniMax(board, enemyState, true);
+			board[i] = State::Empty;
+			bestMove = min(move, bestMove);
+		}
+
+		return bestMove;
+	}
+
+	void Game::PlayAI(bool playerFirst)
 	{
 		State winner = State::Empty;
 		do
 		{
-			Print(cout);
-			cout << "Go! Player '" << State::X << "', it's your move, pick a space to move (1-9)\n";
-			while (!MoveFromInput(State::X, cin))
-				cout << "You must be a number between 1-9. Make sure that space is empty!\n";
+			if (playerFirst)
+			{
+				Print(cout);
+				cout << "Go! Player '" << State::X << "', it's your move, pick a space to move (1-9)\n";
+				while (!MoveFromInput(State::X, cin))
+					cout << "You must be a number between 1-9. Make sure that space is empty!\n";
+			}
+			else
+				GudAIMove(State::O);
 
 			if ((winner = Winner()) != State::Empty)
 				break;
 
-			AIMove(State::O);
-			if (!memchr(board, (char)State::Empty, 9))
+			if (playerFirst)
+				GudAIMove(State::O);
+			else
 			{
 				Print(cout);
-				cout << "It's a tie!" << endl;
-				return;
+				cout << "Go! Player '" << State::X << "', it's your move, pick a space to move (1-9)\n";
+				while (!MoveFromInput(State::X, cin))
+					cout << "You must be a number between 1-9. Make sure that space is empty!\n";
 			}
 		}
 		while ((winner = Winner()) == State::Empty);

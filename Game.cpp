@@ -72,6 +72,9 @@ namespace TicTacToe
 	}
 
 	State Game::Winner()
+	{ return Winner(board); }
+
+	State Game::Winner(Board board)
 	{
 		State tmp;
 		if (board[0] != State::Empty)
@@ -91,6 +94,8 @@ namespace TicTacToe
 				return tmp;
 			if (board[3] == tmp && board[5] == tmp)
 				return tmp;
+			if (board[2] == tmp && board[6] == tmp)
+				return tmp;
 		}
 		if (board[8] != State::Empty)
 		{
@@ -101,6 +106,8 @@ namespace TicTacToe
 				return tmp;
 		}
 
+		if (!memchr(board, (char)State::Empty, 9))
+			return State::Tie;
 		return State::Empty;
 	}
 }
