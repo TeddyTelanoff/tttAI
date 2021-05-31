@@ -43,6 +43,6 @@ namespace TicTacToe
 		static State Winner(Board board);
 	private:
 		[[recursive]]
-		static int MiniMax(Board board, State state, bool maximizing);
+		static int MiniMax(Board board, State state);
 	};
 }

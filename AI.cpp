@@ -82,8 +82,8 @@ namespace TicTacToe
 			if (board[i] != State::Empty)
 				continue;
 
-			board[i] = enemyState;
-			int move = MiniMax(board, state, false);
+			board[i] = state;
+			int move = -MiniMax(board, enemyState);
 			board[i] = State::Empty;
 			if (move > bestMoveVal)
 			{
@@ -97,7 +97,7 @@ namespace TicTacToe
 	}
 
 	[[recursive]]
-	int Game::MiniMax(Board board, State state, bool maximizing)
+	int Game::MiniMax(Board board, State state)
 	{
 		State winner = Winner(board);
 		State enemyState = !state;
@@ -108,33 +108,16 @@ namespace TicTacToe
 		if (winner == State::Tie)
 			return 0;
 
-		if (maximizing)
-		{
-			int bestMove = 10;
-			for (int i = 0; i < 9; i++)
-			{
-				if (board[i] != State::Empty)
-					continue;
-
-				board[i] = state;
-				int move = MiniMax(board, state, false);
-				board[i] = State::Empty;
-				bestMove = max(move, bestMove);
-			}
-
-			return bestMove;
-		}
-
-		int bestMove = -10;
+		int bestMove = -69;
 		for (int i = 0; i < 9; i++)
 		{
 			if (board[i] != State::Empty)
 				continue;
 
-			board[i] = enemyState;
-			int move = MiniMax(board, enemyState, true);
+			board[i] = state;
+			int move = -MiniMax(board, enemyState);
 			board[i] = State::Empty;
-			bestMove = min(move, bestMove);
+			bestMove = max(move, bestMove);
 		}
 
 		return bestMove;
