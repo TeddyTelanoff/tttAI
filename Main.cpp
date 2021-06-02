@@ -34,11 +34,11 @@ static bool EqualsIgnoreCase(const string &a, const string &b)
 
 int main()
 {
-	TicTacToe::Game game;
-
 	do
 	{
+		system("cls");
 		bool startFirst = Confirm("Do you want to start first?");
+		TicTacToe::Game game;
 		game.PlayAI(startFirst);
 	}
 	while (Confirm("Do you wanna play again?"));
