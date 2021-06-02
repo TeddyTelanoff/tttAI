@@ -3,6 +3,23 @@
 #include <string>
 using namespace std; // Please don't hurt me, I have a family!
 
+static bool Confirm(const string &prompt)
+{
+	char yes = 0;
+
+	do
+	{
+		cout << prompt << " (Y/N)";
+
+		string str;
+		getline(cin, str);
+		if (str.length() == 1)
+			yes = toupper(str[0]);
+	}
+	while (yes != 'Y' && yes != 'N');
+	return yes == 'Y';
+}
+
 // Handy Function
 static bool EqualsIgnoreCase(const string &a, const string &b)
 {
@@ -17,23 +34,12 @@ static bool EqualsIgnoreCase(const string &a, const string &b)
 
 int main()
 {
-	char first = 0;
+	TicTacToe::Game game;
 
 	do
 	{
-		cout << "Do you wanna start first? (Y/N)";
-
-		string str;
-		getline(cin, str);
-		if (str.length() == 1)
-		{
-			first = toupper(str[0]);
-		}
+		bool startFirst = Confirm("Do you want to start first?");
+		game.PlayAI(startFirst);
 	}
-	while (first != 'Y' && first != 'N');
-	
-	TicTacToe::Game game;
-	game.PlayAI(first == 'Y');
-	
-	system("pause");
+	while (Confirm("Do you wanna play again?"));
 }
